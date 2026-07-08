@@ -1,4 +1,4 @@
-# Coze Resource Finder
+# Resource Finder
 
 一个本地资源链接搜索器。用户在页面输入想找的资源名称，后端会调用扣子 / Coze 工作流接口，并把工作流返回的资料链接清洗、去重、提取提取码后展示成卡片。
 
@@ -9,6 +9,24 @@
 - 自动识别并展示资源链接、平台、提取码和简短说明
 - 支持常见网盘平台：迅雷云盘、百度网盘、移动云盘、阿里云盘、夸克网盘、UC 网盘、蓝奏云等
 - 支持将应用打包成 Windows 双击启动器
+
+## 最简单的使用方式（Windows）
+
+如果你只是想直接使用，不想安装 Node.js：
+
+1. 打开本仓库的 Releases 页面。
+2. 下载 `resource-finder-windows.zip`。
+3. 解压整个压缩包。
+4. 打开 `.env`，填写自己的扣子 API Token：
+
+```env
+COZE_API_TOKEN=your_coze_token_here
+```
+
+5. 双击 `ResourceFinder.exe`。
+6. 浏览器会自动打开 `http://localhost:5177`。
+
+压缩包里已经包含 `node.exe`、`ResourceFinder.exe`、服务端代码和前端页面。不要只单独下载 exe，必须保留整个文件夹。
 
 ## 项目结构
 
@@ -135,8 +153,9 @@ public/
 ## 安全说明
 
 - 不要提交 `.env`，里面包含真实 API Token。
-- 不要把带真实 `.env` 的压缩包上传到公开仓库。
+- 不要把带真实 token 的 `.env` 上传到 GitHub，也不要放进公开压缩包。
 - 前端不会直接调用扣子 API，避免在浏览器里暴露 Token。
+- Release 压缩包内的 `.env` 只应包含占位符，使用者需要填写自己的 token。
 
 ## 免责声明
 
