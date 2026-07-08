@@ -28,6 +28,31 @@ COZE_API_TOKEN=your_coze_token_here
 
 压缩包里已经包含 `node.exe`、`ResourceFinder.exe`、服务端代码和前端页面。不要只单独下载 exe，必须保留整个文件夹。
 
+## 作为 Codex Skill 使用
+
+仓库内提供了技能目录：
+
+```text
+skill/resource-finder/
+```
+
+安装方式：
+
+1. 下载本仓库，或从 Release 下载 `resource-finder-skill.zip`。
+2. 把 `resource-finder` 文件夹复制到你的 Codex skills 目录，例如：
+
+```powershell
+copy skill\resource-finder $env:USERPROFILE\.codex\skills\resource-finder -Recurse
+```
+
+3. 之后可以在 Codex 中这样使用：
+
+```text
+Use $resource-finder to create or update a local Coze workflow resource search app.
+```
+
+说明：skill 里只包含模板和流程说明，不包含真实 API Token。生成应用后仍需要在 `.env` 中配置自己的 `COZE_API_TOKEN`，或使用你自己部署的后端代理。
+
 ## 项目结构
 
 ```text

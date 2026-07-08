@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>资源链接搜索器</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="search-panel" aria-labelledby="page-title">
+        <div class="brand-row">
+          <div class="brand-mark" aria-hidden="true">R</div>
+          <div>
+            <p class="eyebrow">Coze Workflow Search</p>
+            <h1 id="page-title">资源链接搜索器</h1>
+          </div>
+        </div>
+
+        <p class="intro">
+          输入你想找的资源，系统会调用接口并把返回的资料链接整理出来。
+        </p>
+
+        <form id="search-form" class="search-form">
+          <label class="field-label" for="query">想搜索什么资源？</label>
+          <div class="input-row">
+            <input
+              id="query"
+              name="query"
+              type="search"
+              placeholder="例如：React 入门教程、AI 绘图资料、Python 数据分析课程"
+              autocomplete="off"
+              required
+            />
+            <button id="submit-button" type="submit">
+              <span class="button-text">搜索资源</span>
+              <span class="loader" aria-hidden="true"></span>
+            </button>
+          </div>
+
+          <div class="toolbar">
+            <button type="button" class="chip" data-example="Python 数据分析免费资料">Python 数据分析</button>
+            <button type="button" class="chip" data-example="AIGC 视频生成工具教程">AIGC 视频</button>
+            <button type="button" class="chip" data-example="前端 UI 设计灵感网站">UI 灵感</button>
+          </div>
+        </form>
+
+        <aside class="disclaimer-box" aria-label="免责声明">
+          <strong>免责声明</strong>
+          <span>
+            本页面仅对接口返回的资料链接进行整理展示，不存储资源文件，也不保证链接的有效性、合法性与安全性。
+            请在遵守法律法规和版权要求的前提下使用。联系方式：Acbaoan。
+          </span>
+        </aside>
+      </section>
+
+      <section class="result-panel" aria-live="polite">
+        <div class="result-header">
+          <div>
+            <p class="eyebrow">Results</p>
+            <h2>搜索结果</h2>
+          </div>
+          <span id="status-pill" class="status-pill">等待输入</span>
+        </div>
+
+        <div id="empty-state" class="empty-state">
+          <div class="empty-icon" aria-hidden="true">↗</div>
+          <h3>准备好收集链接了</h3>
+          <p>搜索后，接口返回的链接会在这里自动归类展示。</p>
+        </div>
+
+        <div id="error-box" class="error-box" hidden></div>
+        <div id="results" class="results-grid"></div>
+      </section>
+    </main>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
