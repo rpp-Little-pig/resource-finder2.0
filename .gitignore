@@ -1,0 +1,11 @@
+.env
+node_modules/
+.DS_Store
+server.log
+build/
+dist/
+*.zip
+*.exe
+!scripts/*.cs
+node.exe
+resource-finder-windows/
