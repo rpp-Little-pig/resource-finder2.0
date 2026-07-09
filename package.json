@@ -1,7 +1,7 @@
 {
   "name": "resource-finder",
   "version": "1.0.0",
-  "description": "Full-web resource search and cleaned link display app powered by a Coze workflow.",
+  "description": "调用扣子工作流的全网资源搜索和链接清洗展示工具。",
   "private": true,
   "type": "module",
   "scripts": {

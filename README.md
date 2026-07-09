@@ -51,7 +51,7 @@ copy skill\resource-finder $env:USERPROFILE\.codex\skills\resource-finder -Recur
 3. 之后可以在 Codex 中这样使用：
 
 ```text
-Use $resource-finder to create or update a local Coze workflow app for full-web resource search and cleaned link display.
+使用 $resource-finder 创建或更新一个本地扣子工作流应用，用于全网资源搜索和链接清洗展示。
 ```
 
 说明：skill 里只包含模板和流程说明，不包含真实 API Token。生成应用后仍需要在 `.env` 中配置自己的 `COZE_API_TOKEN`，或使用你自己部署的后端代理。

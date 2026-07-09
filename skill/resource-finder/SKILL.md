@@ -1,26 +1,28 @@
 ---
 name: resource-finder
-description: Build, update, debug, or package a local Windows web app that calls a Coze/扣子 workflow to search full-web resources and display cleaned links, platforms, access codes, and notes. Use when the user asks for a full-web resource search UI, resource-link finder, API-backed local app, Windows exe packaging, or modifications to this Resource Finder template.
+description: "创建、更新、调试或打包一个调用扣子工作流的本地 Windows Web 应用，用于搜索全网资源并清洗展示资源链接、平台、提取码和说明。适用于全网资源搜索界面、资源链接搜索器、接口驱动的本地应用、Windows exe 打包，以及 Resource Finder 模板维护。"
 ---
 
 # Resource Finder
 
-## Core Workflow
+## 核心定位
 
-Use the bundled template at `assets/app-template/` as the starting point. The app is positioned as a full-web resource search and acquisition helper: users enter keywords, the backend calls a resource search workflow, and the UI turns returned links into clear cards. It contains:
+Resource Finder 是一个面向全网资源搜索获取的本地工具。用户输入想找的资源关键词后，后端调用扣子工作流或资源搜索接口，前端把返回的链接、平台、提取码和说明整理成清晰卡片。
 
-- `server.js`: local Node backend that proxies Coze workflow calls and cleans returned links.
-- `public/`: browser UI for entering a resource name and displaying cleaned cards.
-- `.env.example`: configuration keys without secrets.
-- `scripts/ResourceFinderLauncher.cs`: Windows launcher source for creating a double-click exe wrapper.
+使用内置模板 `assets/app-template/` 作为起点。模板包含：
 
-When creating or updating an app:
+- `server.js`：本地 Node 后端，负责代理扣子工作流请求并清洗返回链接。
+- `public/`：浏览器界面，用于输入资源关键词并展示清洗后的资源卡片。
+- `.env.example`：配置项示例，不包含真实密钥。
+- `scripts/ResourceFinderLauncher.cs`：Windows 双击启动器源码，可编译成 exe。
 
-1. Copy `assets/app-template/` to the user's target directory.
-2. Create `.env` from `.env.example`; never hardcode tokens in frontend files.
-3. Set `COZE_WORKFLOW_ID`, `COZE_API_TOKEN`, and `COZE_PARAMETER_KEY` (`input` by default).
-4. Keep the browser request local: `POST /api/search` with `{ "query": "..." }`.
-5. Let `server.js` call `POST https://api.coze.cn/v1/workflow/run` with:
+创建或更新应用时：
+
+1. 将 `assets/app-template/` 复制到用户指定目录。
+2. 基于 `.env.example` 创建 `.env`；不要把真实 Token 写进前端文件。
+3. 配置 `COZE_WORKFLOW_ID`、`COZE_API_TOKEN` 和 `COZE_PARAMETER_KEY`，默认参数名为 `input`。
+4. 浏览器只请求本地接口：`POST /api/search`，请求体为 `{ "query": "..." }`。
+5. 由 `server.js` 请求扣子工作流：`POST https://api.coze.cn/v1/workflow/run`，请求体示例：
 
 ```json
 {
@@ -31,48 +33,48 @@ When creating or updating an app:
 }
 ```
 
-6. Show cleaned results only unless the user explicitly asks for debugging output.
+6. 默认只展示清洗后的资源结果；只有用户明确要求排查问题时，才显示请求和原始返回内容。
 
-## UI Rules
+## 界面规则
 
-- Do not expose `Authorization`, raw request payloads, or full workflow output in the normal UI.
-- Display resource cards below the search area.
-- Keep the disclaimer visible if the app lists third-party resource links.
-- Prefer platform labels and short display URLs over long raw URLs.
-- Include copy/open buttons for each resource link.
+- 正常界面不要暴露 `Authorization`、原始请求体或完整工作流返回。
+- 资源卡片必须显示在搜索区域下方。
+- 如果页面展示第三方资源链接，需要保留免责声明。
+- 优先展示平台名称和短链接摘要，避免直接把很长的原始 URL 堆在界面上。
+- 每个资源链接都应提供复制和打开按钮。
 
-## Cleaning Behavior
+## 数据清洗规则
 
-Preserve the template's cleaning approach:
+保留模板中的清洗逻辑：
 
-- Parse `output`, `output1`, `output2`, `answer`, `result`, `content`, `text`, and `message`.
-- Extract markdown links such as `[点击打开](https://...)`.
-- Deduplicate URLs.
-- Extract access codes from labels such as `提取码`, `访问码`, `密码`, `口令`, or `code`.
-- Recognize common platforms including 迅雷云盘, 百度网盘, 移动云盘, 阿里云盘, 夸克网盘, UC 网盘, 蓝奏云, GitHub, Bilibili, and YouTube.
+- 解析 `output`、`output1`、`output2`、`answer`、`result`、`content`、`text` 和 `message` 等字段。
+- 提取 Markdown 链接，例如 `[点击打开](https://...)`。
+- 对重复 URL 去重。
+- 从 `提取码`、`访问码`、`密码`、`口令`、`code` 等标签中提取访问码。
+- 识别常见平台，包括迅雷云盘、百度网盘、移动云盘、阿里云盘、夸克网盘、UC 网盘、蓝奏云、GitHub、Bilibili 和 YouTube。
 
-## Debugging
+## 调试排查
 
-If the user says the Coze preview works but the app does not:
+如果用户说扣子预览正常，但本地应用拿不到结果：
 
-1. Confirm the workflow is published and the start node parameter name matches `COZE_PARAMETER_KEY`.
-2. Use `POST /api/debug-search` temporarily to inspect the backend request and raw workflow data.
-3. If the app receives empty output but Coze preview has data, check whether the workflow needs additional start-node parameters. Put fixed values in `COZE_STATIC_PARAMETERS_JSON`.
-4. If the backend cannot connect to Coze, check local proxy/TLS settings and optionally set `HTTPS_PROXY`.
+1. 确认工作流已经发布，并且开始节点参数名和 `COZE_PARAMETER_KEY` 一致。
+2. 临时使用 `POST /api/debug-search` 检查后端发送的请求和扣子原始返回。
+3. 如果本地返回为空但扣子预览有数据，检查工作流是否还需要额外开始节点参数；固定参数可写入 `COZE_STATIC_PARAMETERS_JSON`。
+4. 如果后端无法连接扣子，检查本地代理或 TLS 设置，必要时配置 `HTTPS_PROXY`。
 
-Remove debug panels from the user-facing UI after troubleshooting unless explicitly requested.
+问题排查结束后，除非用户明确要求保留调试信息，否则从用户界面移除调试面板。
 
-## Windows Exe Packaging
+## Windows exe 打包
 
-For a practical Windows package:
+制作 Windows 可双击运行包时：
 
-1. Compile `scripts/ResourceFinderLauncher.cs` with:
+1. 编译 `scripts/ResourceFinderLauncher.cs`：
 
 ```powershell
 & 'C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe' /nologo /target:winexe /out:ResourceFinder.exe scripts\ResourceFinderLauncher.cs
 ```
 
-2. Place these files beside `ResourceFinder.exe`:
+2. 将以下文件放在 `ResourceFinder.exe` 同级目录：
 
 - `node.exe`
 - `server.js`
@@ -80,6 +82,6 @@ For a practical Windows package:
 - `.env`
 - `.env.example`
 
-3. Double-clicking `ResourceFinder.exe` starts `node.exe server.js`, opens `http://localhost:PORT/`, and writes runtime logs to `server.log`.
+3. 双击 `ResourceFinder.exe` 后，会启动 `node.exe server.js`，打开 `http://localhost:PORT/`，并把运行日志写入 `server.log`。
 
-Use Node SEA or another packager only when the environment can install the required tooling such as `postject`.
+只有在环境可以安装 `postject` 等必要工具时，才考虑使用 Node SEA 或其他打包方案。

@@ -1,4 +1,4 @@
 interface:
   display_name: "Resource Finder"
-  short_description: "Build full-web resource search tools"
-  default_prompt: "Use $resource-finder to create or update a local Coze workflow app for full-web resource search and cleaned link display."
+  short_description: "创建全网资源搜索工具"
+  default_prompt: "使用 $resource-finder 创建或更新一个本地扣子工作流应用，用于全网资源搜索和链接清洗展示。"
