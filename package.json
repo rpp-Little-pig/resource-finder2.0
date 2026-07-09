@@ -1,7 +1,7 @@
 {
   "name": "resource-finder",
   "version": "1.0.0",
-  "description": "Full-web resource link search and cleanup app powered by a Coze workflow.",
+  "description": "Full-web resource search and cleaned link display app powered by a Coze workflow.",
   "private": true,
   "type": "module",
   "scripts": {
