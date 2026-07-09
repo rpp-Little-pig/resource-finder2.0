@@ -1,12 +1,15 @@
 # Resource Finder
 
-一个本地资源链接搜索器。用户在页面输入想找的资源名称，后端会调用扣子 / Coze 工作流接口，并把工作流返回的资料链接清洗、去重、提取提取码后展示成卡片。
+Resource Finder 是一个全网资源搜索获取工具。用户输入想找的影视、课程、软件、资料或其他关键词后，系统会通过扣子 / Coze 工作流检索全网可访问的资源线索，并把返回的资料链接清洗、去重、提取提取码后展示成卡片。
+
+它不是个人资源库，也不存储任何资源文件；它的定位是一个“全网资源链接搜索入口”，负责把接口返回的搜索结果整理成更容易打开、复制和使用的形式。
 
 ## 功能特点
 
+- 全网资源关键词搜索，适合查找影视、课程、工具、文档、素材等资源线索
 - 本地 Web 界面，浏览器访问 `http://localhost:5177`
-- 后端代理调用扣子工作流，前端不会暴露 `Authorization`
-- 自动识别并展示资源链接、平台、提取码和简短说明
+- 后端代理调用扣子工作流接口，前端不会暴露 `Authorization`
+- 自动清洗接口返回内容，识别并展示资源链接、平台、提取码和简短说明
 - 支持常见网盘平台：迅雷云盘、百度网盘、移动云盘、阿里云盘、夸克网盘、UC 网盘、蓝奏云等
 - 支持将应用打包成 Windows 双击启动器
 
@@ -48,7 +51,7 @@ copy skill\resource-finder $env:USERPROFILE\.codex\skills\resource-finder -Recur
 3. 之后可以在 Codex 中这样使用：
 
 ```text
-Use $resource-finder to create or update a local Coze workflow resource search app.
+Use $resource-finder to create or update a local Coze workflow app for searching and displaying full-web resource links.
 ```
 
 说明：skill 里只包含模板和流程说明，不包含真实 API Token。生成应用后仍需要在 `.env` 中配置自己的 `COZE_API_TOKEN`，或使用你自己部署的后端代理。
@@ -184,4 +187,4 @@ public/
 
 ## 免责声明
 
-本项目仅对接口返回的资料链接进行整理展示，不存储资源文件，也不保证链接的有效性、合法性与安全性。请在遵守法律法规和版权要求的前提下使用。
+本项目仅对接口检索到的全网资源链接进行整理展示，不存储、不上传、不分发任何资源文件，也不保证链接的有效性、合法性与安全性。请在遵守法律法规、平台规则和版权要求的前提下使用。

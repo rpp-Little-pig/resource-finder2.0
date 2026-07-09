@@ -1,13 +1,13 @@
 ---
 name: resource-finder
-description: Build, update, debug, or package a local Windows web app that calls a Coze/扣子 workflow to search resources and display cleaned resource links. Use when the user asks for a Coze workflow search UI, resource-link finder, API-backed local app, Windows exe packaging, or modifications to this resource finder template.
+description: Build, update, debug, or package a local Windows web app that calls a Coze/扣子 workflow to search full-web resources and display cleaned resource links. Use when the user asks for a full-web resource search UI, resource-link finder, API-backed local app, Windows exe packaging, or modifications to this Resource Finder template.
 ---
 
-# Coze Resource Finder
+# Resource Finder
 
 ## Core Workflow
 
-Use the bundled template at `assets/app-template/` as the starting point. It contains:
+Use the bundled template at `assets/app-template/` as the starting point. The app is positioned as a full-web resource search and link cleanup tool, not a personal resource organizer. It contains:
 
 - `server.js`: local Node backend that proxies Coze workflow calls and cleans returned links.
 - `public/`: browser UI for entering a resource name and displaying cleaned cards.
